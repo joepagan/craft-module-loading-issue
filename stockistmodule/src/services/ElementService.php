@@ -23,14 +23,15 @@ class ElementService extends Component
         $address = $event->contentData['addressInformation']['new1']['fields']['address1'];
         $urlEncodedAddress = urlencode($address);
         $geocode = StockistModule::getInstance()->apiService->getCoordinates($urlEncodedAddress);
+        StockistModule::getInstance()->validationService->model($geocode);
 
         $element->setFieldValues([
             'addressInformation' => [
                 'new1' => [
                     'type' => 'address',
                     'fields' => [
-                        'address1' => "{$geocode->street_number} {$geocode->route}",
-                        'city' => $geocode->locality,
+                        'address1' => "{$geocode->street_number} {$geocode->route} {$geocode->locality}",
+                        'city' => $geocode->postal_town,
                         'county' => $geocode->administrative_area_level_1,
                         'postcode' => $geocode->postal_code,
                     ],

@@ -27,6 +27,7 @@ use modules\stockistmodule\services\{
     ElementService,
     FeedService,
     ApiService,
+    ValidationService,
 };
 
 // FeedMe
@@ -40,7 +41,9 @@ use craft\feedme\services\Process;
  * @package   StockistModule
  * @since     1.0.0
  * @property FeedService $feedService
- * @property ApiService $elementService
+ * @property ElementService $elementService
+ * @property ApiService $apiService
+ * @property ValidationService $validationService
  *
  */
 class StockistModule extends Module
@@ -50,6 +53,23 @@ class StockistModule extends Module
      * @var StockistModule
      */
     public static StockistModule $instance;
+    /**
+     * @var mixed
+     */
+    private mixed $apiService;
+    /**
+     * @var mixed
+     */
+    private mixed $elementService;
+    /**
+     * @var mixed
+     */
+    private mixed $validationService;
+    /**
+     * @var mixed
+     * @note this cannot be called with self::getInstance()->feedService if it's set here
+     */
+//    private mixed $feedService;
 
     /**
      * @inheritdoc
@@ -76,6 +96,7 @@ class StockistModule extends Module
             'feedService' => FeedService::class,
             'elementService' => ElementService::class,
             'apiService' => ApiService::class,
+            'validationService' => ValidationService::class,
         ]);
 
         // Base template directory
